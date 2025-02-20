@@ -53,8 +53,8 @@ resource "azurerm_virtual_machine" "vm" {
 
   os_profile {
     computer_name  = "example-vm"
-    admin_username = "clovis"
-    admin_password = "Merline1990" # Replace with a secure password or use SSH keys
+    admin_username = "adminuser"
+    admin_password = "Password1234!" # Replace with a secure password or use SSH keys
   }
 
   os_profile_linux_config {
