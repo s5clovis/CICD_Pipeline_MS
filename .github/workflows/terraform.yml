@@ -79,7 +79,6 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
-    if: hashFiles('Dockerfile') != ''  # Runs only if a Dockerfile exists
     needs: terraform  # Runs after Terraform job
 
     steps:
@@ -87,14 +86,29 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      # Log in to Docker Hub
+      # Check if Dockerfile exists
+      - name: Check for Dockerfile
+        id: check-dockerfile
+        run: |
+          if [ -f Dockerfile ]; then
+            echo "Dockerfile exists"
+            echo "dockerfile_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Dockerfile does not exist"
+            echo "dockerfile_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      # Log in to Docker Hub (only if Dockerfile exists)
       - name: Log in to Docker Hub
+        if: steps.check-dockerfile.outputs.dockerfile_exists == 'true'
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      # Build Docker Image
+      # Build Docker Image (only if Dockerfile exists)
       - name: Build Docker Image
+        if: steps.check-dockerfile.outputs.dockerfile_exists == 'true'
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest .
 
-      # Push Docker Image to Docker Hub
+      # Push Docker Image to Docker Hub (only if Dockerfile exists)
       - name: Push Docker Image
+        if: steps.check-dockerfile.outputs.dockerfile_exists == 'true'
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
