@@ -9,7 +9,7 @@ resource "azurerm_container_group" "docker_container" {
 
   container {
     name   = "example-container"
-    image  = "${var.dockerhub_username}/devops:latest" # Use the variable here
+    image  = "${var.dockerhub_username}/devops" # Use the variable here
     cpu    = "1"
     memory = "1.5"
 
