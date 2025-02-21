@@ -21,8 +21,8 @@ resource "azurerm_container_group" "docker_container" {
 
   # Add Docker Hub credentials for private images
   image_registry_credential {
-    username = cloviskonyui
-    password = Merline1990
+    username = "cloviskonyui"
+    password = "Merline1990"
     server   = "docker.io" # Docker Hub registry server
   }
 
