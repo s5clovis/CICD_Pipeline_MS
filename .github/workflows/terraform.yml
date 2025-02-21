@@ -117,10 +117,6 @@ jobs:
         if: steps.check-dockerfile.outputs.dockerfile_exists == 'true'
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-     # Check if GitHub Actions is passing credentials properly
-      - name: Debug Terraform Variables
-        run: env | grep TF_VAR
-
       # Build Docker Image (only if Dockerfile exists)
       - name: Build Docker Image
         if: steps.check-dockerfile.outputs.dockerfile_exists == 'true'
