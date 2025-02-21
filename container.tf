@@ -9,7 +9,7 @@ resource "azurerm_container_group" "docker_container" {
 
   container {
     name   = "example-container"
-    image  = "${var.dockerhub_username}/myapp:latest" # Use the variable here
+    image  = "cloviskonyui/myapp:latest" # Use the variable here
     cpu    = "1"
     memory = "1.5"
 
@@ -21,8 +21,8 @@ resource "azurerm_container_group" "docker_container" {
 
   # Add Docker Hub credentials for private images
   image_registry_credential {
-    username = var.dockerhub_username
-    password = var.dockerhub_password
+    username = cloviskonyui
+    password = Merline1990
     server   = "docker.io" # Docker Hub registry server
   }
 
